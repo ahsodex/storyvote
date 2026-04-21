@@ -37,7 +37,8 @@ struct Args {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt()
         .with_env_filter(
-            std::env::var("RUST_LOG").unwrap_or_else(|_| "storyvote=info,axum=info".to_string()),
+            std::env::var("RUST_LOG")
+                .unwrap_or_else(|_| "storyvote=info,axum=info,tower_http=info".to_string()),
         )
         .init();
 
