@@ -11,29 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Ensure Release Exists
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: StoryVote ${{ github.ref_name }}
-          body: |
-            Self-hosted agile story point estimation server release.
+        run: |
+          gh release view "${{ github.ref_name }}" --repo "${{ github.repository }}" >/dev/null 2>&1 || \
+          gh release create "${{ github.ref_name }}" \
+            --repo "${{ github.repository }}" \
+            --title "StoryVote ${{ github.ref_name }}" \
+            --notes "Self-hosted agile story point estimation server release.
 
-            This release is built automatically for:
-            - Linux x86_64
-            - macOS x86_64
-            - macOS aarch64
-            - Windows x86_64
+          This release is built automatically for:
+          - Linux x86_64
+          - macOS x86_64
+          - macOS aarch64
+          - Windows x86_64
 
-            Download the artifact for your platform and run the executable directly.
-          draft: false
-          prerelease: false
+          Download the artifact for your platform and run the executable directly."
 
   build:
     name: Build ${{ matrix.target }}
@@ -62,7 +57,7 @@ jobs:
             asset_name: storyvote-windows-x86_64.exe
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -96,22 +91,13 @@ jobs:
 
       - name: Upload Release Asset (Unix)
         if: runner.os != 'Windows'
-        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./release/${{ matrix.asset_name }}.tar.gz
-          asset_name: ${{ matrix.asset_name }}.tar.gz
-          asset_content_type: application/gzip
+        run: gh release upload "${{ github.ref_name }}" "./release/${{ matrix.asset_name }}.tar.gz" --repo "${{ github.repository }}" --clobber
 
       - name: Upload Release Asset (Windows)
         if: runner.os == 'Windows'
-        uses: actions/upload-release-asset@v1
+        shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./release/${{ matrix.asset_name }}.zip
-          asset_name: ${{ matrix.asset_name }}.zip
-          asset_content_type: application/zip
+        run: gh release upload "${{ github.ref_name }}" "./release/${{ matrix.asset_name }}.zip" --repo "${{ github.repository }}" --clobber

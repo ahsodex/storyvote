@@ -11,7 +11,7 @@ jobs:
     name: Rust Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' || contains(github.event.head_commit.message, '[e2e]')
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
