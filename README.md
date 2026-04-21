@@ -37,6 +37,9 @@ Minimal, self-hosted agile story point estimation tool.
   - `cargo run -- --bind 0.0.0.0 --port 8787`
 - Enable HTTP access logging (request/response logs):
   - `cargo run -- --http-access-log`
+  - Logs are emitted via `tower_http=info`. The default `RUST_LOG` already includes this target, but if you set `RUST_LOG` yourself, add `tower_http=info` to see the request logs, e.g.:
+    - **Linux/macOS:** `RUST_LOG=storyvote=info,axum=info,tower_http=info ./storyvote --http-access-log`
+    - **Windows (PowerShell):** `$env:RUST_LOG="storyvote=info,axum=info,tower_http=info"; .\storyvote.exe --http-access-log`
 
 ## Host Controls
 - First participant to join becomes host.
