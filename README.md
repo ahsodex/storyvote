@@ -40,6 +40,9 @@ Minimal, self-hosted agile story point estimation tool.
   - Logs are emitted via `tower_http=info`. The default `RUST_LOG` already includes this target, but if you set `RUST_LOG` yourself, add `tower_http=info` to see the request logs, e.g.:
     - **Linux/macOS:** `RUST_LOG=storyvote=info,axum=info,tower_http=info ./storyvote --http-access-log`
     - **Windows (PowerShell):** `$env:RUST_LOG="storyvote=info,axum=info,tower_http=info"; .\storyvote.exe --http-access-log`
+  - For full wire-level logs (request/response headers, body sizes, timings), use `tower_http=trace`:
+    - **Linux/macOS:** `RUST_LOG=storyvote=info,axum=info,tower_http=trace ./storyvote --http-access-log`
+    - **Windows (PowerShell):** `$env:RUST_LOG="storyvote=info,axum=info,tower_http=trace"; .\storyvote.exe --http-access-log`
 
 ## Host Controls
 - First participant to join becomes host.
