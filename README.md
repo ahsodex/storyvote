@@ -75,6 +75,9 @@ Automated cross-platform builds are available via GitHub Actions:
 - Artifacts: Compressed binaries uploaded to GitHub Releases
 - Action: `.github/workflows/release.yml`
 
+## License
+MIT — see [LICENSE](LICENSE).
+
 ## Notes
 - If teammates cannot connect in LAN mode, check local firewall rules.
 - Browser remembers last entered display name for convenience.
