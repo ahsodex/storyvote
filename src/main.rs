@@ -55,8 +55,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     print_share_urls(local_addr, args.localhost_only);
 
     info!("Server listening on {}", local_addr);
-    axum::serve(listener, app).await?;
+    axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal())
+        .await?;
     Ok(())
+}
+
+async fn shutdown_signal() {
+    tokio::signal::ctrl_c()
+        .await
+        .expect("failed to install Ctrl+C handler");
+    info!("Shutdown signal received, stopping server");
 }
 
 fn resolve_bind_ip(args: &Args) -> IpAddr {

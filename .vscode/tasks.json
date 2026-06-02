@@ -1,0 +1,168 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Cargo: build",
+      "type": "shell",
+      "command": "cargo",
+      "args": [
+        "build"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ]
+    },
+    {
+      "label": "Cargo: build --release",
+      "type": "shell",
+      "command": "cargo",
+      "args": [
+        "build",
+        "--release"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ]
+    },
+    {
+      "label": "Cargo: run",
+      "type": "shell",
+      "command": "cargo",
+      "args": [
+        "run"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Cargo: run --release",
+      "type": "shell",
+      "command": "cargo",
+      "args": [
+        "run",
+        "--release"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": [
+        "$lessc"
+      ]
+    },
+    {
+      "label": "Cargo: test (core)",
+      "type": "shell",
+      "command": "cargo",
+      "args": [
+        "test",
+        "--bin",
+        "storyvote",
+        "--quiet"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Cargo: check",
+      "type": "shell",
+      "command": "cargo",
+      "args": [
+        "check"
+      ],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ]
+    },
+    {
+      "label": "NPM: install",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "install"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Playwright: install browsers",
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "install",
+        "chromium"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "NPM: test:e2e",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "test:e2e"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Build & Test",
+      "dependsOn": [
+        "Cargo: build",
+        "Cargo: test (core)"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "Build & Test (with E2E)",
+      "dependsOn": [
+        "Cargo: build",
+        "Cargo: test (core)",
+        "NPM: install",
+        "Playwright: install browsers",
+        "NPM: test:e2e"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "Build Release & Run",
+      "dependsOn": [
+        "Cargo: build --release",
+        "Cargo: run --release"
+      ],
+      "dependsOrder": "sequence"
+    }
+  ]
+}

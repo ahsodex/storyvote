@@ -67,6 +67,17 @@ Notes:
 - Node/npm are not required to build or run the Rust server.
 - Node/npm are only required for the optional browser smoke tests.
 
+## VS Code Tasks
+
+A set of convenience VS Code tasks is included at `.vscode/tasks.json` to make common flows one-command from the editor.
+
+- **Build & Test**: runs the fast compile + core Rust tests (no E2E).
+- **Build & Test (with E2E)**: runs build, core tests, then the npm/Playwright e2e steps (slower; requires Node/npm and browsers).
+- **Build Release & Run**: builds the release binary and runs it.
+
+To run tasks: open the Command Palette → `Tasks: Run Task` and choose a task. The tasks file is tracked in the repo (see `.gitignore` change).
+
+
 ## Releases
 
 Automated cross-platform builds are available via GitHub Actions:

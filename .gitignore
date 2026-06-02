@@ -3,4 +3,6 @@
 node_modules/
 playwright-report/
 test-results/
-.vscode/
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json

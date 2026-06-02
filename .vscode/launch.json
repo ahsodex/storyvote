@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug storyvote (CodeLLDB)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/target/debug/storyvote",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Cargo: build",
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug storyvote (CodeLLDB - Windows)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/target/debug/storyvote.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Cargo: build",
+      "stopOnEntry": false,
+      "console": "integratedTerminal"
+    }
+  ]
+}
