@@ -71,7 +71,7 @@ impl SharedState {
 
             drop(state);
             self.broadcast_snapshot().await;
-            return Ok((session_id, is_host));
+            Ok((session_id, is_host))
         }
     }
 

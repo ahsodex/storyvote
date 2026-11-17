@@ -2,7 +2,7 @@
 
 Minimal, self-hosted agile story point estimation tool.
 
-**Supported Platforms:** Windows, Linux, macOS (any platform with Rust 1.56+)
+**Supported Platforms:** Windows, Linux, macOS (any platform with Rust 1.89+)
 
 ## What This App Does
 - Runs as a single Rust server process.

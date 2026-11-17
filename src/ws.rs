@@ -9,7 +9,7 @@ pub async fn handle_socket(mut socket: WebSocket, shared: Arc<SharedState>, name
         Ok(result) => result,
         Err(message) => {
             send_event(&mut socket, &ServerEvent::Error { message }).await;
-            let _ = socket.close().await;
+            let _ = socket.send(Message::Close(None)).await;
             return;
         }
     };
@@ -105,7 +105,7 @@ async fn send_event(socket: &mut WebSocket, event: &ServerEvent) -> bool {
         Err(_) => return false,
     };
 
-    socket.send(Message::Text(payload)).await.is_ok()
+    socket.send(Message::Text(payload.into())).await.is_ok()
 }
 
 #[cfg(test)]
@@ -321,7 +321,7 @@ mod tests {
         event: &ClientEvent,
     ) {
         let payload = serde_json::to_string(event).unwrap();
-        socket.send(ClientMessage::Text(payload)).await.unwrap();
+        socket.send(ClientMessage::Text(payload.into())).await.unwrap();
     }
 
     async fn next_state(
